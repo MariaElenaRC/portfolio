@@ -1,0 +1,9 @@
+# Netlify settings. The site is plain files: nothing to build.
+[build]
+  publish = "."
+
+# Long-lived caching for images; pages and scripts always revalidate.
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
