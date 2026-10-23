@@ -172,17 +172,41 @@
     var head = el("div", "panel-head");
     var close = el("button", "panel-close", "Close"); close.type = "button";
     close.addEventListener("click", function () { toggleSkill(openSkill, true); });
-    add(head, el("h3", "", sk.title + ": the work"), close);
-    var cards = el("div", "cards");
-    visibleProjects(sk.id).forEach(function (p) {
-      var c = el("div", "card");
-      add(c, el("span", "org", p.org), el("span", "title", p.title),
-        psrLine("Problem", p.problem), psrLine("Solution", p.solution), psrLine("Result", p.result));
-      if (DRAFT || hasStory(p)) {
-        var a = el("a", "more", "Read the case study"); a.href = projectUrl(p); c.appendChild(a);
-      }
-      cards.appendChild(c);
-    });
+    add(head, el("h3", "", sk.title), close);
+
+    // The skill's main project is shown in full, with its video, image or number.
+    var list = visibleProjects(sk.id);
+    var main = list.filter(function (p) { return p.slug === sk.main; })[0] || list[0];
+    var mainBox = el("div", "main-work");
+    var media = mediaFor(main);
+    if (media) { mainBox.appendChild(media); } else { mainBox.classList.add("no-media"); }
+    var txt = el("div", "main-text");
+    add(txt, el("span", "org", main.org), el("h4", "", main.title),
+      psrLine("Problem", main.problem), psrLine("Solution", main.solution), psrLine("Result", main.result));
+    if (DRAFT || hasStory(main)) {
+      var go = el("a", "btn btn-accent", "Read the full case study"); go.href = projectUrl(main); txt.appendChild(go);
+    }
+    mainBox.appendChild(txt);
+
+    // Everything else under this skill, one line each.
+    var others = list.filter(function (p) { return p !== main; });
+    var cards = el("div", "more-work");
+    if (others.length) {
+      cards.appendChild(el("p", "more-label", "More " + sk.title.toLowerCase() + " work"));
+      var ul = el("ul");
+      others.forEach(function (p) {
+        var li = el("li");
+        var linked = DRAFT || hasStory(p);
+        var a = el(linked ? "a" : "span", "more-item");
+        if (linked) { a.href = projectUrl(p); }
+        add(a, el("span", "t", p.title), el("span", "o", p.org));
+        var line = isTodo(p.result) ? null : el("span", "r", p.result);
+        add(a, line);
+        li.appendChild(a); ul.appendChild(li);
+      });
+      cards.appendChild(ul);
+    }
+    cards.insertBefore(mainBox, cards.firstChild);
     add(panel, head, cards);
     panel.hidden = false;
     panel.style.animation = "none"; void panel.offsetWidth; panel.style.animation = "";
@@ -192,28 +216,43 @@
     }
   }
 
-  /* Selected work: one lead feature and the number cards */
-  function work() {
-    var lead = S.projects.filter(function (p) { return p.feature === "lead" && (DRAFT || projectReady(p)); })[0];
-    if (lead) {
-      var f = el("div", "feature c-deep");
-      var t = el("div", "feature-text");
-      add(t, el("span", "kicker", "Featured case study, " + lead.org), el("h3", "", lead.title),
-        textOrTodo("p", "", lead.solution));
-      add(t, textOrTodo("p", "", lead.result), textOrTodo("p", "", lead.resultNumber));
-      if (DRAFT || hasStory(lead)) {
-        var a = el("a", "btn btn-accent", "Read the case study"); a.href = projectUrl(lead); t.appendChild(a);
-      }
-      f.appendChild(t);
-      if (lead.image) {
-        var m = el("div", "feature-media"); var img = el("img"); img.src = lead.image; img.alt = lead.imageAlt || ""; img.loading = "lazy";
-        m.appendChild(img); f.appendChild(m);
-      } else if (DRAFT) {
-        var ph = el("div", "feature-media"); ph.appendChild(el("div", "placeholder", "[IMAGE TO ADD: set image for this project in content.js]")); f.appendChild(ph);
-      } else { f.style.gridTemplateColumns = "minmax(0, 1fr)"; }
-      $("feature").appendChild(f);
+  /* A project's visual: a YouTube video (loads only when clicked), an image,
+     or its number counting up. */
+  function mediaFor(p) {
+    if (p.video) {
+      var b = el("button", "video");
+      b.type = "button";
+      b.setAttribute("aria-label", "Play video: " + p.title);
+      var img = el("img"); img.alt = ""; img.loading = "lazy";
+      img.src = "https://i.ytimg.com/vi/" + p.video + "/hqdefault.jpg";
+      var play = el("span", "play"); play.setAttribute("aria-hidden", "true");
+      add(b, img, play);
+      b.addEventListener("click", function () {
+        var f = document.createElement("iframe");
+        f.src = "https://www.youtube-nocookie.com/embed/" + p.video + "?autoplay=1&rel=0";
+        f.title = p.title;
+        f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+        f.allowFullscreen = true;
+        b.replaceWith(f);
+      });
+      var wrap = el("div", "media"); wrap.appendChild(b); return wrap;
     }
+    if (p.image) {
+      var m = el("div", "media"); var i = el("img"); i.src = p.image; i.alt = p.imageAlt || ""; i.loading = "lazy";
+      m.appendChild(i); return m;
+    }
+    if (p.stat) {
+      var n = el("div", "media media-stat c-" + p.color);
+      var fig = el("span", "figure");
+      add(n, fig, el("span", "label", p.stat.label));
+      countUp(n, [{ node: fig, stat: p.stat }]);
+      return n;
+    }
+    return null;
+  }
 
+  /* Results band: the number cards */
+  function work() {
     var counters = [];
     S.projects.filter(function (p) { return p.feature === "stat" && p.stat && (DRAFT || projectReady(p)); }).forEach(function (p) {
       var linked = DRAFT || hasStory(p);
@@ -221,7 +260,7 @@
       if (linked) { c.href = projectUrl(p); }
       var fig = el("span", "figure");
       add(c, el("span", "label-top", p.shortTitle || p.title), fig, el("span", "label", p.stat.label));
-      if (linked) { c.appendChild(el("span", "more", "See how")); }
+      if (linked) { c.appendChild(el("span", "more", "Read the case study")); }
       $("stats").appendChild(c);
       counters.push({ node: fig, stat: p.stat });
     });
@@ -300,8 +339,8 @@
       if (row[0] === "Result") { add(d, textOrTodo("span", "v", p.resultNumber)); }
       psr.appendChild(d);
     });
-    if (p.image) {
-      var m = el("div", "case-media"); var img = el("img"); img.src = p.image; img.alt = p.imageAlt || ""; m.appendChild(img); root.appendChild(m);
+    if (p.video || p.image) {
+      var m = mediaFor(p); m.classList.add("case-media"); root.appendChild(m);
     }
     var story = el("div", "story");
     (p.story || []).forEach(function (para) { add(story, textOrTodo("p", "", para)); });

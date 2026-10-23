@@ -14,7 +14,7 @@ window.SITE = {
   name: "Maria Elena Romero",
 
   // The sentence above your name. Drafted from your interview: change freely.
-  intro: "I lead social strategy for a humanitarian organization. What I'm proudest of is that I can imagine something and then actually make it happen.",
+  intro: "I lead social strategy for a humanitarian organization. What I'm proudest of is that I can imagine innovative content and then make it happen.",
 
   // The two short lines under your name.
   facts: [
@@ -48,6 +48,7 @@ window.SITE = {
       title: "Social strategy and analytics",
       color: "teal",
       ready: true,
+      main: "linkedin-newsletter",
       proof: "I lead social strategy at Doctors Without Borders USA and built how the team reads its numbers and turns them into decisions."
     },
     {
@@ -55,6 +56,7 @@ window.SITE = {
       title: "Content and storytelling",
       color: "vermilion",
       ready: true,
+      main: "humanitarian-lens",
       proof: "Video podcasts, newsletters, anniversary video series. I pitch a format, then build it."
     },
     {
@@ -62,13 +64,15 @@ window.SITE = {
       title: "Leading projects",
       color: "plum",
       ready: true,
-      proof: "I turned two years of talk about a podcast into a show, and took over the digital side of a struggling election series."
+      main: "every-30-seconds",
+      proof: "I take an idea from pitch to launch: a video podcast at MSF, the TikTok channel at The World, the digital side of a yearlong election series."
     },
     {
       id: "ai",
       title: "Working with AI",
       color: "indigo",
       ready: true,
+      main: "ai-drafting-pilot",
       proof: "I'm leading a pilot of an AI tool that drafts social content, and I use AI every day to brainstorm, draft and analyze data."
     }
   ],
@@ -78,9 +82,12 @@ window.SITE = {
     no spaces) and fill it in.
 
     skills:   which skill boxes it appears under (use the skill ids above)
-    feature:  "lead"  = the big dark card at the top of Selected work (only one)
-              "stat"  = a colored number card (needs a stat block)
+    feature:  "stat"  = also shown as a colored number card under Results (needs a stat block)
               ""      = appears only inside the skill boxes
+    video:    a YouTube video ID (the part after watch?v=). Shown as a clickable video.
+    image:    a picture in images/, used when there's no video.
+    A skill box opens on its "main" project, shown in full with its video,
+    image or number; the box's other projects are listed below it.
     stat:     { prefix, from, to, suffix, label } — the number counts from → to
     story:    paragraphs for the case-study page
     links:    buttons on the case-study page
@@ -91,18 +98,19 @@ window.SITE = {
       org: "Doctors Without Borders USA",
       title: "The Humanitarian Lens video podcast",
       skills: ["content", "lead"],
-      feature: "lead",
-      color: "teal",
+      feature: "",
+      color: "vermilion",
+      video: "XxVpeEyMKWE",
       image: "",
       imageAlt: "Dr. Javid Abdelmoneim at the microphone on the set of The Humanitarian Lens",
-      problem: "Our YouTube channel had almost no long-form content, and MSF had talked about starting a podcast for two years without making one.",
+      problem: "Our YouTube channel had almost no long-form content, and MSF had in-depth stories we rarely got to tell at length.",
       solution: "I pitched it as a plan we could start the next day: five episode ideas, the shape of each show, and how web stories and social would carry it. Then I made it a team project.",
       result: "Outlets now contact MSF to interview our guests, the show created new ways of working across teams, and we use viewer data to tighten each opening.",
       resultNumber: "TODO: one number from the podcast data, such as total views or average watch time.",
       story: [
-        "People at MSF had been discussing a podcast for two years. The conversations were all concept and no plan. I decided the way to break that was to pitch something so concrete we could agree on it and start the next day.",
-        "So I came with episodes, not ideas: possible stories for the first five shows, plus a format for every episode, from the opening to the introduction, the interview and what followed, and how a web story and social posts would extend each one. I expected resistance from people who had been part of the earlier discussions, so I opened the plan up for comments and made it a group project, with production and post-production spread across the team.",
-        "Two things nearly derailed it. We needed a studio, and building it pushed our first shoot from five months out to eight. Then a camera mistake on the first shoot only surfaced when I saw the first edit. I pushed back and argued for my fix, because the first episode had to be right.",
+        "MSF had wanted a podcast for a while. I thought the way to get it started was to pitch something so concrete we could agree on it and begin the next day.",
+        "So I came with episodes, not ideas: possible stories for the first five shows, plus a format for every episode, from the opening to the introduction, the interview and what followed, and how a web story and social posts would extend each one. I wanted everyone invested, so I opened the plan up for comments and made it a group project, with production and post-production spread across the team.",
+        "Two things nearly derailed it. We needed a studio, and building it pushed our first shoot from five months out to eight. Then a technical problem from the first shoot only surfaced when I saw the first edit. I pushed for the fix I believed in, because the first episode had to be right.",
         "The show is now seen inside MSF as a format that works. Media contact us to interview the people who appear on it, and it changed how teams work together. Nobody works on it full time: everyone fits it around their regular job. We study the data on every episode, and when we saw viewers leaving early, we changed how episodes open so they get into the story faster. My favorite episodes are the first one, on Sudan, and the one on Gaza."
       ],
       links: [
@@ -150,14 +158,14 @@ window.SITE = {
     {
       slug: "the-world-social",
       org: "The World (PRX and GBH), 2018 to 2023",
-      title: "Building video into a radio newsroom's social media",
+      title: "Launching The World's TikTok and bringing video to its social media",
       shortTitle: "Instagram at The World",
-      skills: ["audience", "content"],
+      skills: ["audience", "content", "lead"],
       feature: "stat",
       color: "plum",
       stat: { prefix: "", from: 5000, to: 15000, suffix: "", label: "Instagram followers, up from about 5,000 in my four years at The World" },
       problem: "The World is a radio program, and its social accounts had little video.",
-      solution: "I made the case for video, gave field reporters simple tips for shooting it, launched the program's TikTok with at least four videos a week, and started a weekly news recap with interns. I ran Instagram, TikTok, Facebook and X.",
+      solution: "I launched the program's TikTok channel, posting at least four videos a week, and started a weekly news recap with interns. I made the case for video across all our accounts and gave field reporters simple tips for shooting it. I ran Instagram, TikTok, Facebook and X.",
       result: "Instagram grew from about 5,000 to about 15,000 followers, with graphic and video formats that the team kept using.",
       story: [
         "When I joined The World, its social media reflected a radio newsroom: very little video. I kept making the argument that we needed it, and I wrote short tips so reporters in the field could send me usable footage. Some were reluctant at first, and then they started sending it.",
@@ -190,7 +198,7 @@ window.SITE = {
       skills: ["audience", "lead"],
       feature: "",
       color: "teal",
-      problem: "There was no systematic analysis of how our social content performed.",
+      problem: "Social performance wasn't analyzed in a regular, systematic way.",
       solution: "I created how our analytics are presented, regular sessions to set strategy with the social team, and briefings to present findings to management.",
       result: "Analytics now feed the team's decisions, and we keep improving the process so we can say our decisions are based on numbers.",
       story: ["TODO: an example of a decision this process changed, and what management does with the briefings."],
@@ -219,12 +227,14 @@ window.SITE = {
       skills: ["lead", "content"],
       feature: "",
       color: "plum",
-      problem: "Management said the digital side of this yearlong election series wasn't working: assets were late, and there wasn't even photography.",
-      solution: "I asked to take over the digital work, then added videos, Facebook Lives and photography, and produced the project video.",
+      video: "7WIN_JnxtCs",
+      problem: "Partway through this yearlong election series, its digital side needed a reset: assets were running late and there was no photography yet.",
+      solution: "I volunteered to lead the digital work, then added videos, Facebook Lives and photography, produced the project video and designed the series graphic.",
       result: "The series' digital assets improved substantially. It followed eight young Latino first-time voters with seven public radio partners.",
+      resultNumber: "TODO: one number for the series, such as video views or audience reach.",
       story: [
-        "Every 30 Seconds followed eight young Latino first-time voters through the 2020 election, with seven public radio partners. Before I led the digital side, management called a meeting to say what was being done wasn't good enough. We didn't even have photography.",
-        "I asked to take it on. Once I had the opportunity, we created videos, ran Facebook Lives, got the photography done, and I produced the project video and designed the series graphic."
+        "Every 30 Seconds followed eight young Latino first-time voters through the 2020 election, with seven public radio partners. Partway through, it was clear the digital side needed more: more video, and photography we didn't yet have.",
+        "I asked to lead it. We created videos, ran Facebook Lives, got the photography done, and I produced the project video and designed the series graphic."
       ],
       links: [
         { label: "Read the story", url: "https://theworld.org/stories/2020/10/28/we-followed-eight-young-latino-first-time-voters-all-year-here-s-how-they-view" },
@@ -238,6 +248,7 @@ window.SITE = {
       skills: ["content"],
       feature: "",
       color: "vermilion",
+      video: "Y3TJPUzDhRA",
       problem: "The World is a radio-first newsroom, and I was the only person making video.",
       solution: "I pitched a series of videos for the first anniversary of the war, interviewed the correspondents, and produced them with Andrew Blum, combining archive footage with the correspondents' own video.",
       result: "TODO: Marco Werman's reaction, in words he confirms, or another result.",

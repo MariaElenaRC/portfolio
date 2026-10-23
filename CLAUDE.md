@@ -6,6 +6,15 @@ Instructions for Claude Code. Read this file before doing anything in this repos
 
 Maria Elena Romero owns this site. She is not a coder. She describes what she wants in plain English; you make the change, show her a preview, and publish only when she says so. Explain what you did in plain language, without jargon. Her husband Gabriel (GitHub: Gelizondo-bit) built the first version and is a collaborator.
 
+## How to work with Maria on her content
+
+Maria tends to undersell herself. She mentions big things in passing: launching The World's TikTok came up as an aside. When she describes her work:
+
+- Ask what she started, launched or led, and give those projects prominence.
+- Always press for numbers: followers before and after, views, watch time, open and click rates, sign-ups, growth over a period. Ask "Do you have the data for that?" and "What changed after?" If she doesn't know, ask whether she can look it up, and leave a TODO rather than a vague claim.
+- Ask what happened as a result, not only what she did.
+- Keep it fair to colleagues and employers: the site is public. Describe problems as situations to solve, never as other people's failures.
+
 ## What the site is
 
 A one-page professional portfolio plus a case-study page. It positions Maria for audience strategy, analytics and communications leadership roles. It is plain HTML, CSS and JavaScript with no framework and no build step. Keep it that way: do not add frameworks, package managers, bundlers or dependencies.
@@ -53,7 +62,9 @@ Before publishing, always open the preview with `?draft=0` and confirm it looks 
 
 ## Common requests
 
-**"Add a project."** Copy an existing block in `projects` in content.js. Give it a new `slug` (lowercase, hyphens, no spaces). Fill `org`, `title`, `skills` (ids of the skill boxes it belongs under), `problem`, `solution`, `result`, `story` (paragraphs for the case-study page) and `links`. Set `feature` to `"stat"` with a `stat` block if it should be a number card, or leave it `""`. Only one project can be `feature: "lead"`.
+**"Add a project."** Copy an existing block in `projects` in content.js. Give it a new `slug` (lowercase, hyphens, no spaces). Fill `org`, `title`, `skills` (ids of the skill boxes it belongs under), `problem`, `solution`, `result`, `story` (paragraphs for the case-study page) and `links`. Add `video` (a YouTube ID) or `image` so it has a visual. Set `feature` to `"stat"` with a `stat` block if it should also be a number card under Results, or leave it `""`.
+
+**"Change which project leads a skill box."** Each skill in content.js has a `main` project slug. Clicking the box shows that project in full, with its video, image or number, and lists the box's other projects below it.
 
 **"Interview me about [project] and fill it in."** Ask her, one question at a time: what was the problem or gap, what did she decide and do, what happened as a result (with a number if she has one), and what she learned. Then draft `problem`, `solution`, `result` (one sentence each) and two to four `story` paragraphs in her voice. Show her the draft, revise, then save.
 
