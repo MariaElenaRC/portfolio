@@ -71,7 +71,7 @@ em { font-style: italic; }
 .section-head { display: flex; flex-wrap: wrap; gap: 12px 40px; align-items: baseline; justify-content: space-between; margin-bottom: 32px; }
 .section-head p { color: var(--soft); max-width: 420px; }
 .boxes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.slot { display: flex; opacity: 0; transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+.slot { display: flex; opacity: 0; transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); }
 .slot.from-l { transform: translateX(-140px); }
 .slot.from-r { transform: translateX(140px); }
 .slot.in { opacity: 1; transform: none; }

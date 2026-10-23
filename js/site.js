@@ -84,11 +84,14 @@
       items.forEach(function (n) { n.classList.add("in"); });
       return;
     }
+    // Boxes slide in each time they come into view, and reset once they are
+    // fully off screen, so the motion replays when you scroll back to them.
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {
-        if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+        if (en.intersectionRatio >= 0.35) { en.target.classList.add("in"); }
+        else if (!en.isIntersecting) { en.target.classList.remove("in"); }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: [0, 0.35] });
     items.forEach(function (n) { io.observe(n); });
   }
 
