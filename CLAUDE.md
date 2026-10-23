@@ -36,9 +36,10 @@ A one-page professional portfolio plus a case-study page. It positions Maria for
 2. **Unfinished content is marked `TODO:`.** Any text in content.js that starts with `TODO:` shows as an amber label on previews and is hidden on the live site. Never delete a TODO by replacing it with a guess.
 3. **Nothing unfinished goes public.** Work on `draft`, check the preview, publish only when Maria says "publish".
 4. **Content goes in content.js**, not scattered through the HTML.
-5. **Preserve the design** unless she asks for a design change: the Spectral and Karla fonts, the color variables in styles.css, the hero with her name large, the color skill boxes, the number cards.
+5. **Preserve the design** unless she asks for a design change: the Spectral and Karla fonts, the color variables in styles.css, the hero with her name large in one font, the round photo, the color skill boxes, the number cards. Keep labels in sentence case (no ALL-CAPS), no arrows on buttons, no numbered markers, and no scroll-in animations beyond the ones already there. Those habits make a site look machine-made.
 6. **Do not remove existing projects or sections** without asking her first.
 7. **Her words, her voice.** When you draft text for her, write plainly and specifically, in first person, and show it to her before saving. No marketing filler.
+8. **Her email is not shown on the site.** Visitors use the contact form. Don't add it back unless she asks.
 
 ## How draft mode works
 
@@ -60,15 +61,15 @@ Before publishing, always open the preview with `?draft=0` and confirm it looks 
 
 **"Fill in the Working with AI box."** Edit the skill with id `ai`: replace the `proof` TODO with her real description, add at least one project tagged `skills: ["ai"]`, then set `ready: true`.
 
-**"Replace my photo."** Save the new image in `images/` and set `photo` in content.js. The hero expects a cutout: a PNG or WebP with a transparent background, head and shoulders, roughly 4:5, about 720px wide. If she gives you a normal photo, remove the background first and show her the result before using it. If she prefers a normal framed photo, ask before changing the hero layout.
+**"Replace my photo."** Save the new image in `images/` and set `photo` in content.js. The hero shows it inside a marigold circle. A head-and-shoulders photo works best, about 720px wide; a cutout with a transparent background lets the marigold show around her. If the face sits too high or low in the circle, adjust `object-position` on `.portrait img` in styles.css.
 
 **"Add my resume."** Save the PDF in `assets/` and set `resume: "assets/<filename>.pdf"`.
 
-**"Add travel photos."** Save up to three in `images/` (resize to about 1200px wide, compress) and list them in `offClock.photos` with a `place` name each.
+**"Add travel photos."** Save up to three in `images/` (resize to about 1200px wide, compress) and list them in `offClock.photos` with a `place` name each. The "Off the clock" section stays hidden on the live site until there is at least one photo.
 
 **"Add an image to a project."** Save it in `images/`, set the project's `image` and `imageAlt`.
 
-**"Change the ticker."** Edit the `ticker` list. Each item is a bold figure and a short label. Real figures only.
+**"Change the ticker."** Edit the `ticker` list. Each item is a short skill. Maria chose skills, not numbers, for this band.
 
 **"Move this project above that one."** Reorder the blocks in `projects`.
 

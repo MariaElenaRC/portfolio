@@ -79,7 +79,7 @@
 
   /* ---------- Scroll reveals ---------- */
   function reveals() {
-    var items = document.querySelectorAll(".reveal, .slot");
+    var items = document.querySelectorAll(".slot");
     if (REDUCED || !("IntersectionObserver" in window)) {
       items.forEach(function (n) { n.classList.add("in"); });
       return;
@@ -95,8 +95,7 @@
   /* ---------- Home page ---------- */
   function home() {
     $("intro").textContent = S.intro;
-    $("name-lead").textContent = S.nameLead;
-    $("name-accent").textContent = S.nameAccent;
+    $("name").textContent = S.name;
     $("photo").src = S.photo;
     $("photo").alt = S.photoAlt || S.name;
     S.facts.forEach(function (f) { $("facts").appendChild(el("span", "", f)); });
@@ -105,16 +104,12 @@
     var track = $("ticker-track");
     [false, true].forEach(function (copy) {
       S.ticker.forEach(function (t) {
-        var item = el("span");
-        item.appendChild(el("strong", "", t.figure));
-        item.appendChild(document.createTextNode(" " + t.label));
+        var item = el("span", "", t);
         var dot = el("span", "", "◆");
         if (copy) { item.setAttribute("aria-hidden", "true"); dot.setAttribute("aria-hidden", "true"); }
         track.appendChild(item); track.appendChild(dot);
       });
     });
-
-    S.workedWith.forEach(function (w) { $("worked-with").appendChild(el("span", "", w)); });
 
     skills();
     work();
@@ -135,7 +130,6 @@
       if (!live && !DRAFT) { return; }              // hidden on the live site
       var slot = el("div", "slot " + (shown % 2 === 0 ? "from-l" : "from-r"));
       slot.style.transitionDelay = (shown % 2) * 0.12 + "s";
-      var num = "0" + (shown + 1);
       shown++;
 
       if (!live) {                                   // draft-only dashed box
@@ -150,10 +144,9 @@
       b.setAttribute("aria-expanded", "false");
       b.setAttribute("aria-controls", "skill-panel");
       b.dataset.skill = sk.id;
-      var numeral = el("span", "numeral", num); numeral.setAttribute("aria-hidden", "true");
       var cta = el("span", "cta", "See the work ");
       cta.appendChild(el("span", "go", "↓"));
-      add(b, numeral, el("span", "count", list.length + (list.length === 1 ? " project" : " projects")),
+      add(b, el("span", "count", list.length + (list.length === 1 ? " project" : " projects")),
         el("span", "title", sk.title), textOrTodo("span", "proof", sk.proof), cta);
       b.addEventListener("click", function () { toggleSkill(sk.id, true); });
       slot.appendChild(b); grid.appendChild(slot);
@@ -183,7 +176,7 @@
       add(c, el("span", "org", p.org), el("span", "title", p.title),
         psrLine("Problem", p.problem), psrLine("Solution", p.solution), psrLine("Result", p.result));
       if (DRAFT || hasStory(p)) {
-        var a = el("a", "more", "Read the case study →"); a.href = projectUrl(p); c.appendChild(a);
+        var a = el("a", "more", "Read the case study"); a.href = projectUrl(p); c.appendChild(a);
       }
       cards.appendChild(c);
     });
@@ -200,17 +193,13 @@
   function work() {
     var lead = S.projects.filter(function (p) { return p.feature === "lead" && (DRAFT || projectReady(p)); })[0];
     if (lead) {
-      var f = el("div", "feature lift reveal c-deep");
+      var f = el("div", "feature c-deep");
       var t = el("div", "feature-text");
-      add(t, el("span", "kicker", "Featured case study · " + lead.org), el("h3", "", lead.title),
+      add(t, el("span", "kicker", "Featured case study, " + lead.org), el("h3", "", lead.title),
         textOrTodo("p", "", lead.solution));
-      if (DRAFT && (isTodo(lead.problem) || isTodo(lead.result))) {
-        t.appendChild(el("span", "todo", "[TO FILL IN: the problem and a result number, in content.js]"));
-      } else {
-        add(t, textOrTodo("p", "", lead.result));
-      }
+      add(t, textOrTodo("p", "", lead.result), textOrTodo("p", "", lead.resultNumber));
       if (DRAFT || hasStory(lead)) {
-        var a = el("a", "btn btn-accent", "Read the case study →"); a.href = projectUrl(lead); t.appendChild(a);
+        var a = el("a", "btn btn-accent", "Read the case study"); a.href = projectUrl(lead); t.appendChild(a);
       }
       f.appendChild(t);
       if (lead.image) {
@@ -225,11 +214,11 @@
     var counters = [];
     S.projects.filter(function (p) { return p.feature === "stat" && p.stat && (DRAFT || projectReady(p)); }).forEach(function (p) {
       var linked = DRAFT || hasStory(p);
-      var c = el(linked ? "a" : "div", "stat lift reveal c-" + p.color);
+      var c = el(linked ? "a" : "div", "stat c-" + p.color);
       if (linked) { c.href = projectUrl(p); }
       var fig = el("span", "figure");
       add(c, el("span", "label-top", p.shortTitle || p.title), fig, el("span", "label", p.stat.label));
-      if (linked) { c.appendChild(el("span", "more", "See how →")); }
+      if (linked) { c.appendChild(el("span", "more", "See how")); }
       $("stats").appendChild(c);
       counters.push({ node: fig, stat: p.stat });
     });
@@ -270,7 +259,7 @@
     var photos = oc.photos || [];
     if (!photos.length && !DRAFT) { return; }       // hidden on the live site until photos exist
     $("offclock").hidden = false;
-    $("offclock-text").textContent = oc.text || "";
+    (oc.paragraphs || []).forEach(function (para) { add($("offclock-text"), textOrTodo("p", "", para)); });
     var box = $("offclock-photos");
     if (!photos.length) {
       for (var i = 0; i < 3; i++) {
@@ -281,7 +270,7 @@
       return;
     }
     photos.slice(0, 3).forEach(function (ph) {
-      var fig = el("figure", "travel lift");
+      var fig = el("figure", "travel");
       var fr = el("div", "frame"); var img = el("img"); img.src = ph.src; img.alt = ph.place || "Travel photo"; img.loading = "lazy";
       fr.appendChild(img); add(fig, fr, ph.place ? el("figcaption", "", ph.place) : null);
       box.appendChild(fig);
@@ -304,7 +293,9 @@
     [["Problem", p.problem], ["Solution", p.solution], ["Result", p.result]].forEach(function (row) {
       var v = textOrTodo("span", "v", row[1]);
       if (!v) { return; }
-      var d = el("div"); add(d, el("span", "k", row[0]), v); psr.appendChild(d);
+      var d = el("div"); add(d, el("span", "k", row[0]), v);
+      if (row[0] === "Result") { add(d, textOrTodo("span", "v", p.resultNumber)); }
+      psr.appendChild(d);
     });
     if (p.image) {
       var m = el("div", "case-media"); var img = el("img"); img.src = p.image; img.alt = p.imageAlt || ""; m.appendChild(img); root.appendChild(m);
@@ -313,7 +304,7 @@
     (p.story || []).forEach(function (para) { add(story, textOrTodo("p", "", para)); });
     var links = el("div", "row-buttons");
     (p.links || []).forEach(function (l) {
-      var a = el("a", "btn btn-line", l.label + " →"); a.href = l.url; a.target = "_blank"; a.rel = "noopener"; links.appendChild(a);
+      var a = el("a", "btn btn-line", l.label); a.href = l.url; a.target = "_blank"; a.rel = "noopener"; links.appendChild(a);
     });
     if (links.children.length) { story.appendChild(links); }
     root.appendChild(story);

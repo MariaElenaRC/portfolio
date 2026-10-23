@@ -29,7 +29,7 @@
     <div class="hero">
       <div class="hero-text">
         <p id="intro" class="intro rise d1"></p>
-        <h1 class="name rise d2"><span id="name-lead"></span> <em id="name-accent"></em></h1>
+        <h1 id="name" class="name rise d2"></h1>
       </div>
       <div class="portrait rise d3">
         <div class="arch"></div>
@@ -44,16 +44,10 @@
   <div id="ticker-track" class="track"></div>
 </div>
 
-<div class="wrap">
-  <div class="worked">
-    <strong>Worked with</strong>
-    <span id="worked-with"></span>
-  </div>
-</div>
 
 <main>
   <section id="skills" class="wrap section">
-    <div class="section-head reveal">
+    <div class="section-head">
       <h2>What I do</h2>
       <p>Open a box to see the work behind it.</p>
     </div>
@@ -63,14 +57,14 @@
 
   <section id="work" class="tint">
     <div class="wrap">
-      <h2 class="reveal">Selected work</h2>
+      <h2>Selected work</h2>
       <div id="feature"></div>
       <div id="stats" class="feat3"></div>
     </div>
   </section>
 
   <section id="about" class="wrap section">
-    <div class="two reveal">
+    <div class="two">
       <h2>About</h2>
       <div class="about-body">
         <p id="about-lead" class="lead"></p>
@@ -80,10 +74,10 @@
         </div>
       </div>
     </div>
-    <div id="offclock" class="offclock reveal" hidden>
+    <div id="offclock" class="offclock" hidden>
       <div class="offclock-head">
         <h3>Off the clock</h3>
-        <p id="offclock-text"></p>
+        <div id="offclock-text" class="offclock-text"></div>
       </div>
       <div id="offclock-photos" class="feat3"></div>
     </div>
@@ -92,11 +86,10 @@
 
 <footer id="contact" class="dark">
   <div class="wrap">
-    <div class="two reveal">
+    <div class="two">
       <div class="contact-intro">
-        <h2>Get in <em>touch</em></h2>
-        <p>Use the form, or email me directly.</p>
-        <a id="email-link" class="email" href="#"></a>
+        <h2>Get in touch</h2>
+        <p>Send me a message here and I'll reply by email.</p>
       </div>
       <!-- Netlify Forms: the name, data-netlify and hidden form-name fields must stay. -->
       <form name="contact" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="company">
